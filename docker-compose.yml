@@ -1,0 +1,32 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: chat-mongo
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "mongodb://localhost:27017/admin", "--eval", "db.runCommand({ ping: 1 }).ok"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: chat-server
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      CHAT_HOST: "0.0.0.0"
+      CHAT_PORT: "54678"
+      MONGO_URI: "mongodb://mongo:27017"
+      MONGO_DB: "chat_app"
+    ports:
+      - "54678:54678"
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
