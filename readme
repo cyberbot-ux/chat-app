@@ -1,0 +1,120 @@
+# Chat App
+
+A full Python chat application with:
+
+- Asyncio TCP server
+- MongoDB backend
+- Tkinter-based desktop client
+- Support for direct messages and group chats
+- Friend requests, group invites, presence updates
+- One-click run support (via BAT + Docker for MongoDB)
+
+---
+
+## Features
+
+### 🧠 Server
+- Async Python server using `asyncio`
+- MongoDB storage (users, messages, groups, invites)
+- Real-time online/offline presence
+- Message history caching and undelivered message queue
+- Secure authentication with PBKDF2 hashing
+- Unique public UIDs (ABCD-1234 style)
+- Friend list + group membership sync
+
+### 💬 Client
+- Tkinter UI (single executable possible using PyInstaller)
+- Login + Registration
+- DM and Group chat
+- Send/receive messages in real time
+- Friend requests + group invites popup window
+- Online status indicators
+- Dropdown UI for friend and group selection
+- Right-side rendering for local messages, left-side for incoming messages
+
+---
+
+## Project Structure
+
+chat-app/
+│
+├── server_code.py # Async TCP server with MongoDB
+├── new_client.py # Tkinter chat client
+├── docker-compose.yml # MongoDB container
+├── dockerfile # For server build
+├── run.bat # Start server + DB
+├── stop.bat # Stop everything
+├── requirements.txt # Python dependencies
+└── ChatClient.spec # For PyInstaller build
+
+
+# How to Run the Chat App (Full Steps)
+
+## 1. Install Python 3.10+  
+Download from python.org and make sure you check:
+[✓] Add to PATH
+
+---
+
+## 2. Clone the repository
+git clone https://github.com/cyberbot-ux/chat-app.git
+cd chat-app
+
+---
+
+## 3. Install dependencies
+pip install -r requirements.txt
+
+---
+
+## 4. Start MongoDB using Docker
+docker-compose up -d
+
+(MongoDB will now run in the background)
+
+---
+
+## 5. Run the server
+python server_code.py
+
+(Server will show: "listening on 127.0.0.1:54678")
+
+---
+
+## 6. Run the client
+python new_client.py
+
+(The login/register window will open)
+
+---
+
+## 7. Create a test account
+Use any name and a Gmail email.
+Example:
+Name: test_1
+Email: test1@gmail.com
+Password: something123
+
+---
+
+## 8. Create second test account
+Name: test_2
+Email: test2@gmail.com
+Password: something123
+
+Now you can DM between accounts.
+
+---
+
+## 9. Make a Windows EXE (optional)
+pyinstaller --onefile --noconsole new_client.py
+
+The client EXE will appear inside:
+dist/new_client.exe
+
+This allows one-click client for anyone.
+
+---
+
+## 10. Stop the server + MongoDB (optional)
+docker-compose down
