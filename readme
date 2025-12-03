@@ -106,15 +106,7 @@ Now you can DM between accounts.
 
 ---
 
-## 9. Make a Windows EXE (optional)
-pyinstaller --onefile --noconsole new_client.py
 
-The client EXE will appear inside:
-dist/new_client.exe
 
-This allows one-click client for anyone.
-
----
-
-## 10. Stop the server + MongoDB (optional)
+## 9. Stop the server + MongoDB (optional)
 docker-compose down
